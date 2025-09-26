@@ -1,0 +1,36 @@
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        if (k == 1) return nums;
+        int[] ans = new int[n - k + 1];
+        int maxIdx = 0;
+        
+        for (int i = 0; i < k; i++) {
+            if (nums[i] >= nums[maxIdx]) {
+                maxIdx = i;
+            }
+        }
+        ans[0] = nums[maxIdx];
+        
+        // Slide window
+        for (int i = k; i < n; i++) {
+            // i - k = window's leftmost element
+            // If maxIdx is out of window, find new max
+            if (maxIdx <= i - k) {
+                maxIdx = i - k + 1;
+                for (int j = i - k + 1; j <= i; j++) {
+                    if (nums[j] >= nums[maxIdx]) {
+                        maxIdx = j;
+                    }
+                }
+            }
+            // Compare incoming element
+            if (nums[i] >= nums[maxIdx]) {
+                maxIdx = i;
+            }
+            ans[i - k + 1] = nums[maxIdx];
+        }
+        
+        return ans;
+    }
+}

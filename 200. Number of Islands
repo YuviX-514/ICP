@@ -1,0 +1,32 @@
+class Solution {
+    int island = 0;
+    public int numIslands(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        boolean visit[][] = new boolean[m][n];
+        int c=0;
+        
+        for(int i = 0;i<m;i++){
+            for(int j = 0;j<n;j++){
+                if(grid[i][j] == '1' && !visit[i][j]){
+                helper(grid, visit, i, j, m , n);
+                c++;}
+
+            }
+        }
+        return c;
+    }
+
+    void helper(char grid[][], boolean[][]visit, int i, int j, int m, int n){
+        if(i < 0 || j < 0 || i >= m || j >= n || grid[i][j] =='0' || visit[i][j])return ;
+        
+
+        visit[i][j] = true;
+
+        helper(grid, visit, i, j-1, m, n);
+        helper(grid, visit, i, j+1, m, n);
+        helper(grid, visit, i-1, j, m, n);
+        helper(grid, visit, i+1, j, m, n);
+        
+    }
+}
